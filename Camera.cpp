@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Camera.h"
-
+//소현 TO DO : 11.24 카메라 설정 
 CCamera::CCamera()
 {
 	m_vRotateAngle = Vector3D{ 0.0f, 0.0f, 0.0f };

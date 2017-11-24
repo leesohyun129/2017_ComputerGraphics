@@ -1,11 +1,11 @@
- #pragma once
-
+#pragma once
 class CCamera;
+class Map;
 
 class CRuntimeFrameWork
 {
 private:
-	static CRuntimeFrameWork* mySelf;
+//	static CRuntimeFrameWork* mySelf;
 
 private:
 	GLint m_nViewPortWidth;
@@ -22,6 +22,8 @@ private:
 	Vector3D m_vRotate;
 
 	CCamera*			m_pCamera{ nullptr };
+	
+	Map* m_pMap{nullptr};
 
 // using ¼±¾ð
 public:

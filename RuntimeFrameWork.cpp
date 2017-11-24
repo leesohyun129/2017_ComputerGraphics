@@ -1,16 +1,17 @@
 #include "stdafx.h"
 #include "Camera.h"
+#include "Map.h"
 #include "RuntimeFrameWork.h"
 
 #define GL_PI 3.1415f
 
-CRuntimeFrameWork* CRuntimeFrameWork::mySelf = nullptr;
+//CRuntimeFrameWork* CRuntimeFrameWork::mySelf = nullptr;
 
 
 CRuntimeFrameWork::CRuntimeFrameWork()
 {
 	m_pCamera = new CCamera();
-
+	m_pMap = new Map();
 	// memset(초기화할 자원, 초기화할 값, 초기화할 자원의 크기);
 	memset(m_mtxLocal, 0, sizeof(m_mtxLocal));
 	m_mtxLocal[0] = m_mtxLocal[5] = m_mtxLocal[10] = m_mtxLocal[15] = 1;
@@ -65,7 +66,7 @@ GLvoid CRuntimeFrameWork::Render()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	{
-	
+		m_pMap->MapRender();
 	}
 	
 	glutSwapBuffers();
@@ -77,16 +78,22 @@ GLvoid CRuntimeFrameWork::OnProcessKeyBoard(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'w': case 'W':
-
+		m_pCamera->CameraMove(3);
 		break;
 	case 's': case 'S':
+		
+		m_pCamera->CameraMove(2);
 
 		break;
 	case 'd': case 'D':
+	
+		m_pCamera->CameraMove(0);
 
 		break;
 	case 'a': case 'A':
 		
+		m_pCamera->CameraMove(1);
+
 		break;
 	case 'r': case 'R':
 
