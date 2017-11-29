@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Camera.h"
 #include "Map.h"
+#include "Player.h"
+#include "robot.h"
 #include "RuntimeFrameWork.h"
 
 #define GL_PI 3.1415f
@@ -12,6 +14,8 @@ CRuntimeFrameWork::CRuntimeFrameWork()
 {
 	m_pCamera = new CCamera();
 	m_pMap = new Map();
+	m_pRobot = new Robot();
+	//m_pPlayer = new Player();
 	// memset(초기화할 자원, 초기화할 값, 초기화할 자원의 크기);
 	memset(m_mtxLocal, 0, sizeof(m_mtxLocal));
 	m_mtxLocal[0] = m_mtxLocal[5] = m_mtxLocal[10] = m_mtxLocal[15] = 1;
@@ -39,6 +43,7 @@ GLvoid CRuntimeFrameWork::Init()
 	::glutMouseFunc(m_fpMouse);
 	::glutPassiveMotionFunc(m_fpMouseMove);
 	::glutReshapeFunc(m_fpReshape);
+	
 
 	return GLvoid();
 }
@@ -67,9 +72,18 @@ GLvoid CRuntimeFrameWork::Render()
 
 	{
 		m_pMap->MapRender();
+		//TimerFunc(0);
+		m_pRobot->draw();
 	}
 	
 	glutSwapBuffers();
+	return GLvoid();
+}
+GLvoid CRuntimeFrameWork::TimerFunc(int value)
+{
+	::glutPostRedisplay();
+	::glutTimerFunc(500, m_fpTimer, 0);
+	cout << "불린다 타이머" << endl;
 	return GLvoid();
 }
 
@@ -98,6 +112,9 @@ GLvoid CRuntimeFrameWork::OnProcessKeyBoard(unsigned char key, int x, int y)
 	case 'r': case 'R':
 
 		m_pCamera->CameraReset();
+		break;
+	case '-':
+		m_pCamera->CameraMove(4);
 		break;
 	}
 	Reshape(m_nViewPortWidth, m_nViewPortHeight);
