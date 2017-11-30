@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Map.h"
 
-Map::Map() : mapSize(60)
+Map::Map() : mapSize(40)
 {
 	arr = new MapInfo*[mapSize];
 	//mapinfo 주소가르키는 포인터 mapsize만큼 할당
@@ -15,7 +15,7 @@ Map::Map() : mapSize(60)
 }
 void Map::MapRender()
 {
-	//크기 1큐브 가로 30 세로30 -->900
+	
 	for (int i = 0; i < mapSize; ++i)
 	{
 		for (int j = 0; j < mapSize; ++j)
@@ -23,13 +23,13 @@ void Map::MapRender()
 			//cout << arr[i][j].Map_pos.x << " " << arr[i][j].Map_pos.y << " " << arr[i][j].Map_pos.z << endl;
 			glPushMatrix();
 			{
-				glTranslatef(-25, -10, 20);
-				glRotatef(75, 1.0, 0.0, 0.0);
+				glScalef(2, 2, 2);
+				//glTranslatef(-25, -10, 20);
+				//glRotatef(90, 1.0, 0.0, 0.0);
 				Vector3D pos = arr[i][j].Map_pos;
-				(i+j) % 2 == 0 ? glColor3f(1.0f, 1.0f, 0.0f) : glColor3f(0.0f, 0.8f, 0.8f);
+				(i+j) % 2 == 0 ? glColor3f(1.0f, 1.0f, 0.0f) : glColor3f(0.0f, 0.0f, 0.0f);
 				glTranslatef(pos.x, pos.y, pos.z);
 				glutSolidCube(1);
-
 			}
 			glPopMatrix();
 		}

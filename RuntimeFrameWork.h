@@ -3,6 +3,7 @@ class CCamera;
 class Map;
 class Player;
 class Robot;
+class Airplane;
 class CRuntimeFrameWork
 {
 private:
@@ -27,7 +28,7 @@ private:
 	Map* m_pMap{nullptr};
 	Player* m_pPlayer{ nullptr };
 	Robot* m_pRobot{ nullptr };
-
+	Airplane* m_pAirplane{ nullptr };
 // using ¼±¾ð
 public:
 	//typedef GLvoid(*Idle)();

@@ -4,9 +4,14 @@
 
 GLvoid Robot::draw()
 {
+	
 	glPushMatrix();
 	{
-		/*glScalef(5, 5, 5);*/
+		//짐벌락
+		glMultMatrixf(m_mtxLocal_trans);
+		glMultMatrixf(m_mtxLocal);
+
+
 		GLfloat specref[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glTranslatef(Robot::x, Robot::y - 40, Robot::z);
 		glRotatef(Robot::direction, 0, 1, 0);
@@ -131,53 +136,88 @@ GLvoid Robot::draw()
 
 GLvoid Robot::move(unsigned char key)
 {
-	if (key == GLUT_KEY_UP)
-	{
-		direction = 90;
-		if (angle == 60)
-			angle_add = false;
-		if (angle == -60)
-			angle_add = true;
-		if (angle_add)
-			angle += 10;
-		else if (!angle_add)
-			angle -= 10;
+	//if (key == 8)
+	//{
+	//	direction = 90;
+	//	if (angle == 60)
+	//		angle_add = false;
+	//	if (angle == -60)
+	//		angle_add = true;
+	//	if (angle_add)
+	//		angle += 10;
+	//	else if (!angle_add)
+	//		angle -= 10;
 
-	}
-	if (key == 's' || key == 'S')
+	//}
+	//if (key == 2)
+	//{
+	//	direction = -90;
+	//	if (angle == 60)
+	//		angle_add = false;
+	//	if (angle == -60)
+	//		angle_add = true;
+	//	if (angle_add)
+	//		angle += 10;
+	//	else if (!angle_add)
+	//		angle -= 10;
+	//}
+	//if (key == 'a' || key == 'A')
+	//{
+	//	direction = 180;
+	//	if (angle == 60)
+	//		angle_add = false;
+	//	if (angle == -60)
+	//		angle_add = true;
+	//	if (angle_add)
+	//		angle += 10;
+	//	else if (!angle_add)
+	//		angle -= 10;
+	//}
+	//if (key == 'd' || key == 'D')
+	//{
+	//	direction = 0;
+	//	if (angle == 60)
+	//		angle_add = false;
+	//	if (angle == -60)
+	//		angle_add = true;
+	//	if (angle_add)
+	//		angle += 10;
+	//	else if (!angle_add)
+	//		angle -= 10;
+	//}
+
+	switch (key)
 	{
-		direction = -90;
-		if (angle == 60)
-			angle_add = false;
-		if (angle == -60)
-			angle_add = true;
-		if (angle_add)
-			angle += 10;
-		else if (!angle_add)
-			angle -= 10;
-	}
-	if (key == 'a' || key == 'A')
-	{
-		direction = 180;
-		if (angle == 60)
-			angle_add = false;
-		if (angle == -60)
-			angle_add = true;
-		if (angle_add)
-			angle += 10;
-		else if (!angle_add)
-			angle -= 10;
-	}
-	if (key == 'd' || key == 'D')
-	{
-		direction = 0;
-		if (angle == 60)
-			angle_add = false;
-		if (angle == -60)
-			angle_add = true;
-		if (angle_add)
-			angle += 10;
-		else if (!angle_add)
-			angle -= 10;
+	case 2:
+		//	direction = -90;
+		//	if (angle == 60)
+		//		angle_add = false;
+		//	if (angle == -60)
+		//		angle_add = true;
+		//	if (angle_add)
+		//		angle += 10;
+		//	else if (!angle_add)
+		//		angle -= 10;
+		glPushMatrix();
+		{
+			glLoadIdentity();
+			glTranslatef(0.0f, 0.0f, 10.0f);
+			glMultMatrixf(m_mtxLocal_trans);
+			glGetFloatv(GL_MODELVIEW_MATRIX, m_mtxLocal_trans);
+		}
+		glPopMatrix();
+		glPushMatrix();//결과행렬만 만들라고 푸쉬팝씀.
+		{
+			glLoadIdentity();
+			//행렬에 회전 적용
+			glRotatef(-10.0f, 1.0f, 0.0f, 0.0f);//각도는 무조건 5도씩.그 전에있던 행렬을 5도씩돌림.
+												//전에꺼처럼 각도로 한번에 돌리는게 아님.
+												//구뿐만아니라 어디서든. 
+			glMultMatrixf(m_mtxLocal);
+			glGetFloatv(GL_MODELVIEW_MATRIX, m_mtxLocal);//모델뷰에 사용할 매트릭스 행렬.현재행렬 가지고 오는거. 
+														 //행렬 가져와서--> 결과 만들어주고--> 곱해줌. 
+		}
+		glPopMatrix();
+		break;
 	}
 }

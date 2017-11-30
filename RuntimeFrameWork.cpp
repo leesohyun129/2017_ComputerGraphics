@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "robot.h"
+#include "airplane.h"
 #include "RuntimeFrameWork.h"
 
 #define GL_PI 3.1415f
@@ -15,6 +16,7 @@ CRuntimeFrameWork::CRuntimeFrameWork()
 	m_pCamera = new CCamera();
 	m_pMap = new Map();
 	m_pRobot = new Robot();
+	m_pAirplane = new Airplane();
 	//m_pPlayer = new Player();
 	// memset(초기화할 자원, 초기화할 값, 초기화할 자원의 크기);
 	memset(m_mtxLocal, 0, sizeof(m_mtxLocal));
@@ -30,10 +32,13 @@ CRuntimeFrameWork::CRuntimeFrameWork()
 GLvoid CRuntimeFrameWork::Init()
 {
 	srand((unsigned)time(NULL));
-	::glutInitWindowSize(800, 600); // 윈도우 크기 설정 
 	::glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH); // Display 모드 설정
-	// 윈도우 설정은 생성전에
+	::glutInitWindowPosition(100, 100);
+	::glutInitWindowSize(800, 600); // 윈도우 크기 설정 
+									// 윈도우 설정은 생성전에
 	::glutCreateWindow("PangLand"); // 인자로 넘긴 문자열의 이름을 가진 윈도우 생성
+
+
 	// 콜백 등록은 윈도우 생성 이후
 
 	::glutIdleFunc(m_fpIdle); // Idle 상태일때 호출할 콜백 등록
@@ -44,7 +49,7 @@ GLvoid CRuntimeFrameWork::Init()
 	::glutPassiveMotionFunc(m_fpMouseMove);
 	::glutReshapeFunc(m_fpReshape);
 	
-
+	glEnable(GL_DEPTH_TEST);
 	return GLvoid();
 }
 
@@ -68,12 +73,13 @@ GLvoid CRuntimeFrameWork::Render()
 	// 초기화 될 색은 glutClearColor에서 사용된 색
 
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	{
 		m_pMap->MapRender();
 		//TimerFunc(0);
-		m_pRobot->draw();
+		//m_pRobot->draw();
+		//m_pAirplane->draw();
 	}
 	
 	glutSwapBuffers();
@@ -114,6 +120,9 @@ GLvoid CRuntimeFrameWork::OnProcessKeyBoard(unsigned char key, int x, int y)
 		m_pCamera->CameraReset();
 		break;
 	case '-':
+		m_pCamera->CameraMove(5);
+		break;
+	case '+':
 		m_pCamera->CameraMove(4);
 		break;
 	}
