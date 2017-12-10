@@ -4,7 +4,7 @@
 CCamera::CCamera()
 {
 	m_vRotateAngle = Vector3D{ 0.0f, 0.0f, 0.0f };
-	m_mtxLocal.r1 = Vector3D{ 0.0f, 0.0f, 10.0f };
+	m_mtxLocal.r1 = Vector3D{ 0.0f, 0.0f, 100.0f };
 	m_mtxLocal.r2 = Vector3D{ 0.0f, 0.0f, -1.0f };
 	m_mtxLocal.r3 = Vector3D{ 0.0f, 1.0f, 0.0f };
 	//m_mtxLocal.r1.z = -500;
@@ -61,11 +61,16 @@ GLvoid CCamera::CameraRotate(int away)
 		break;
 	case 2:
 	case 3:
+		//if (m_vRotateAngle.x > -55&& m_vRotateAngle.x<20)
+		{
+
 		away == 2 ? sign = sign : sign = -sign;
+		
 		m_vRotateAngle.x += (sign * ROTATE_FACTOR);
+		}
 		break;
 	}
-
+	cout <<"angle: "<< m_vRotateAngle.x << endl;
 	//GLfloat normalize = sqrt(pow(m_mtxLocal.r1.x, 2) + pow(m_mtxLocal.r1.y, 2) + pow(m_mtxLocal.r1.z, 2));
 	//
 	//m_mtxLocal.r2.x = -m_mtxLocal.r1.x / normalize;
@@ -78,7 +83,7 @@ GLvoid CCamera::CameraRotate(int away)
 GLvoid CCamera::CameraReset()
 {
 	m_vRotateAngle = Vector3D{ 0.0f, 0.0f, 0.0f };
-	m_mtxLocal.r1 = Vector3D{ 0.0f, 0.0f, -10.0f };
+	m_mtxLocal.r1 = Vector3D{ 0.0f, 0.0f, -280.0f };
 	m_mtxLocal.r2 = Vector3D{ 0.0f, 0.0f, -1.0f };
 	m_mtxLocal.r3 = Vector3D{ 0.0f, 1.0f, 0.0f };
 	return GLvoid();

@@ -22,6 +22,12 @@ private:
 	GLfloat m_mtxLocal2[16];
 
 	Vector3D m_vRotate;
+	Vector3D mouse;
+	Vector3D preMouse;
+	Vector3D vRotate;
+	Vector3D vEye;
+	Vector3D vLook;
+	Vector3D vUp;
 
 	CCamera*			m_pCamera{ nullptr };
 	

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Camera.h"
 #include "Map.h"
-#include "Player.h"
+
 #include "robot.h"
 #include "airplane.h"
 #include "RuntimeFrameWork.h"
@@ -153,11 +153,37 @@ GLvoid CRuntimeFrameWork::OnProcessSpecialKeyBoard(int key, int x, int y)
 
 GLvoid CRuntimeFrameWork::OnProcessMouse(int button, int state, int x, int y)
 {
+
 	return GLvoid();
 }
 
 GLvoid CRuntimeFrameWork::OnProcessMouseMove(int x, int y)
 {
+
+	mouse.x = x - preMouse.x;
+	preMouse.x = x;
+	mouse.y = y - preMouse.y;
+	preMouse.y = y;
+
+	//vRotate.z += mouse.x;
+	//vRotate.z += mouse.x;
+	if (mouse.x > 0)
+		m_pCamera->CameraRotate(1);
+	else if (mouse.x < 0)
+		m_pCamera->CameraRotate(0);
+
+	if (mouse.y > 0)
+		m_pCamera->CameraRotate(3);
+	else if (mouse.y < 0)
+		m_pCamera->CameraRotate(2);
+
+	//camera.rotateX += mouse.y / 2;
+	//camera.rotateX += mouse.y / 2;
+	cout << "µÈ´Ùµò´Ù" << endl;
+	cout << mouse.x << endl;
+	//::glutPostRedisplay;
+	//::glutPassiveMotionFunc;
+	Reshape(m_nViewPortWidth, m_nViewPortHeight);
 	return GLvoid();
 }
 
@@ -172,12 +198,12 @@ GLvoid CRuntimeFrameWork::Reshape(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0f, m_nViewPortWidth / m_nViewPortHeight, 1.0f, 1000.0f);
+	gluPerspective(60.0f, 1, 1.0f, 1000.0f);
 	
-	Vector3D vRotate = m_pCamera->GetCameraRotate();
-	Vector3D vEye = m_pCamera->GetCameraPos();
-	Vector3D vLook = m_pCamera->GetCameraLook();
-	Vector3D vUp = m_pCamera->GetCameraUp();
+	vRotate = m_pCamera->GetCameraRotate();
+	vEye = m_pCamera->GetCameraPos();
+	vLook = m_pCamera->GetCameraLook();
+	vUp = m_pCamera->GetCameraUp();
 
 	gluLookAt(
 		vEye.x, vEye.y, vEye.z,
