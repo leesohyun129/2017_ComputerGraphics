@@ -106,7 +106,8 @@ GLvoid CRuntimeFrameWork::Render()
 			{
 				if (m_pBomb[i][j]->isdraw)
 					m_pBomb[i][j]->draw(m_pMap->arr[i][j].Map_pos);
-				m_pExplosion[i][j]->draw(m_pMap->arr[i][j].Map_pos);
+				if (m_pExplosion[i][j]->Explode)
+					m_pExplosion[i][j]->draw(m_pMap->arr[i][j].Map_pos);
 			}
 		}
 	}
@@ -136,9 +137,44 @@ GLvoid CRuntimeFrameWork::TimerFunc(int value)
 			if (!m_pBomb[i][j]->isfalling && m_pBomb[i][j]->y <= -40 && m_pBomb[i][j]->count >= 20)
 			{
 				m_pBomb[i][j]->isdraw = false;
-				m_pExplosion[i][j]->Explode = true;
+				{
+					if (i - 3 >= 0)
+						m_pExplosion[i - 3][j]->Explode = true;
+					if (i - 2 >= 0)
+						m_pExplosion[i - 2][j]->Explode = true;
+					if (i - 1 >= 0)
+						m_pExplosion[i - 1][j]->Explode = true;
+					m_pExplosion[i][j]->Explode = true;
+					if (i + 1 < 15)
+						m_pExplosion[i + 1][j]->Explode = true;
+					if (i + 2 < 15)
+						m_pExplosion[i + 2][j]->Explode = true;
+					if (i + 3 < 15)
+						m_pExplosion[i + 3][j]->Explode = true;
+					if (j - 3 >= 0)
+						m_pExplosion[i][j - 3]->Explode = true;
+					if (j - 2 >= 0)
+						m_pExplosion[i][j - 2]->Explode = true;
+					if (j - 1 >= 0)
+						m_pExplosion[i][j - 1]->Explode = true;
+					if (j + 1 < 15)
+						m_pExplosion[i][j + 1]->Explode = true;
+					if (j + 2 < 15)
+						m_pExplosion[i][j + 2]->Explode = true;
+					if (j + 3 < 15)
+						m_pExplosion[i][j + 3]->Explode = true;
+					m_pBomb[i][j]->count = 0;
+				}
 			}
-			m_pExplosion[i][j]->animation();
+		}
+	}
+
+	for (int i = 0; i < 15; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			if (m_pExplosion[i][j]->Explode)
+				m_pExplosion[i][j]->animation();
 		}
 	}
 	::glutPostRedisplay();
@@ -178,7 +214,22 @@ GLvoid CRuntimeFrameWork::OnProcessKeyBoard(unsigned char key, int x, int y)
 	case '+':
 		m_pCamera->CameraMove(4);
 		break;
+	case 'y':
+		for (int i = 0; i < 15; i++)
+		{
+			for (int j = 0; j < 15; j++)
+			{
+				m_pExplosion[i][j]->init();
+				m_pBomb[i][j]->init();
+				m_pBomb[i][j]->isdraw = false;
+				m_pBomb[i][j]->isfalling = false;
+
+			}
+		}
+		for (int i = 0; i < 10; i++)
+			m_pBomb[rand() % 15][rand() % 15]->init();
 	}
+	::glutPostRedisplay();
 	Reshape(m_nViewPortWidth, m_nViewPortHeight);
 	return GLvoid();
 }
@@ -233,8 +284,8 @@ GLvoid CRuntimeFrameWork::OnProcessMouseMove(int x, int y)
 	//camera.rotateX += mouse.y / 2;
 	cout << "µÈ´Ùµò´Ù" << endl;
 	cout << mouse.x << endl;
-	//::glutPostRedisplay;
-	//::glutPassiveMotionFunc;
+	::glutPostRedisplay;
+	::glutPassiveMotionFunc;
 	Reshape(m_nViewPortWidth, m_nViewPortHeight);
 	return GLvoid();
 }

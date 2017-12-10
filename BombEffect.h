@@ -5,13 +5,13 @@
 
 class Explosion_effect {
 public:
-	float Particle_x[60][60];
-	float Particle_y[60][60];
-	float Particle_z[60][60];
+	float Particle_x[30][30];
+	float Particle_y[30][30];
+	float Particle_z[30][30];
 	bool Explode = false;
-	bool Particle_dead[60][60] = { false };
-	float Radius[60][60] = { 0 };
-	float velocity[60][60];
+	bool Particle_dead[30][30] = { false };
+	float Radius[30][30] = { 0 };
+	float velocity[30][30];
 
 	GLvoid draw(Vector3D pos);
 	GLvoid animation();

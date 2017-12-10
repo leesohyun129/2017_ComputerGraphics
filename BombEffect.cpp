@@ -3,15 +3,20 @@
 
 void Explosion_effect::init()
 {
-	for (int i = 0; i < 60; i++)
+	for (int i = 0; i < 30; i++)
 	{
-		for (int j = 0; j < 59; j++)
+		for (int j = 0; j < 30; j++)
 		{
+			Particle_x[i][j] = 0;
+			Particle_y[i][j] = 0;
+			Particle_z[i][j] = 0;
 			velocity[i][j] = 1.6 + (float)(rand() % 30) / 10.0f;
 			Radius[i][j] = 0;
+			Particle_dead[i][j] = false;
 		}
 	}
-	velocity[59][59] = 1.5;
+	Explode = false;
+	velocity[29][29] = 1.5;
 }
 
 GLvoid Explosion_effect::draw(Vector3D pos)
@@ -28,25 +33,25 @@ GLvoid Explosion_effect::draw(Vector3D pos)
 		{
 			glTranslatef(-150, 0, -150);
 			glTranslatef(pos.x, -40, pos.z);
-			for (int i = 0; i < 60; i++)
+			for (int i = 0; i < 30; i++)
 			{
-				for (int j = 0; j < 60; j++)
+				for (int j = 0; j < 30; j++)
 				{
-					Particle_x[i][j] = ((Radius[i][j] * cos((j * 6)*RAD))*(cos((i * 6)*RAD)));
-					Particle_y[i][j] = ((Radius[i][j] * sin((i * 6)*RAD)));
-					Particle_z[i][j] = ((Radius[i][j] * sin((j * 6)*RAD))*(cos((i * 6)*RAD)));
+					Particle_x[i][j] = ((Radius[i][j] * cos((j * 12)*RAD))*(cos((i * 12)*RAD)));
+					Particle_y[i][j] = ((Radius[i][j] * sin((i * 12)*RAD)));
+					Particle_z[i][j] = ((Radius[i][j] * sin((j * 12)*RAD))*(cos((i * 12)*RAD)));
 				}
 			}
 
-			for (int i = 0; i < 60; i++)
+			for (int i = 0; i < 30; i++)
 			{
-				for (int j = 0; j < 60; j++)
+				for (int j = 0; j < 30; j++)
 				{
-					if (!Particle_dead[i][j] && Explode)
+					if (!Particle_dead[i][j])
 					{
 						glPushMatrix();
 						glTranslatef(Particle_x[i][j], Particle_y[i][j], Particle_z[i][j]);
-						glutSolidCube(0.5);
+						glutSolidCube(1);
 						glPopMatrix();
 					}
 				}
@@ -60,9 +65,9 @@ GLvoid Explosion_effect::animation()
 {
 	if (Explode)
 	{
-		for (int i = 0; i < 60; i++)
+		for (int i = 0; i < 30; i++)
 		{
-			for (int j = 0; j < 60; j++)
+			for (int j = 0; j < 30; j++)
 			{
 				if ((Particle_x[i][j] < -10 || Particle_x[i][j] > 10)
 					|| (Particle_z[i][j] < -10 || Particle_z[i][j] > 10)
@@ -75,19 +80,10 @@ GLvoid Explosion_effect::animation()
 			}
 		}
 	}
-	if (Particle_dead[59][59])
-		Explode = false;
-
-	if (!Explode)
+	if (Particle_dead[29][29])
 	{
-		for (int i = 0; i < 30; i++)
-		{
-			for (int j = 0; j < 30; j++)
-			{
-				Radius[i][j] = 0;
-				Particle_dead[i][j] = false;
-			}
-		}
+		Explode = false;
+		init();
 	}
 }
 
@@ -121,8 +117,10 @@ GLvoid Bomb::draw(Vector3D pos)
 
 void Bomb::init()
 {
-	velocity = rand() % 5 + 10;
-	range = rand() % 3 + 3;
+	y = 400;
+	velocity = rand() % 25 + 5;
+	range =/* rand() % 3 +*/ 3;
 	isdraw = true;
 	isfalling = true;
+	count = 0;
 }
