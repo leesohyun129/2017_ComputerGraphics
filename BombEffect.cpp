@@ -31,7 +31,7 @@ GLvoid Explosion_effect::draw(Vector3D pos)
 	{
 		glPushMatrix();
 		{
-			glTranslatef(-150, 0, -150);
+			glTranslatef(0, 0, 0);
 			glTranslatef(pos.x, -40, pos.z);
 			for (int i = 0; i < 30; i++)
 			{
@@ -97,7 +97,7 @@ GLvoid Bomb::draw(Vector3D pos)
 		glMaterialfv(GL_FRONT, GL_SPECULAR, specref);
 		glMateriali(GL_FRONT, GL_SHININESS, 64);
 		glColor4f(0.2, 0.2, 1.0, 1.0);
-		glTranslatef(-150, 0, -150);
+		glTranslatef(0, 0, 0);
 		glTranslatef(pos.x, y, pos.z);
 		glPushMatrix();
 		{

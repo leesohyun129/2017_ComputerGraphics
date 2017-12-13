@@ -100,6 +100,7 @@ GLvoid CRuntimeFrameWork::Render()
 		//TimerFunc(0);
 		m_pRobot->draw();
 		//m_pAirplane->draw();
+
 		for (int i = 0; i < 15; i++)
 		{
 			for (int j = 0; j < 15; j++)
@@ -174,6 +175,22 @@ GLvoid CRuntimeFrameWork::TimerFunc(int value)
 		for (int j = 0; j < 15; j++)
 		{
 			if (m_pExplosion[i][j]->Explode)
+			{
+				if ((m_pRobot->x + 10 >= m_pMap->arr[i][j].Map_pos.x - 10 &&
+					m_pRobot->x - 10 <= m_pMap->arr[i][j].Map_pos.x + 10) &&
+					(m_pRobot->z + 10 >= m_pMap->arr[i][j].Map_pos.z - 10 &&
+						m_pRobot->z - 10 <= m_pMap->arr[i][j].Map_pos.z + 10))
+				{
+					m_pRobot->y = 100;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < 15; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			if (m_pExplosion[i][j]->Explode)
 				m_pExplosion[i][j]->animation();
 		}
 	}
@@ -229,6 +246,9 @@ GLvoid CRuntimeFrameWork::OnProcessKeyBoard(unsigned char key, int x, int y)
 		for (int i = 0; i < 10; i++)
 			m_pBomb[rand() % 15][rand() % 15]->init();
 	}
+
+	m_pRobot->move(key);
+	printf("%d,    %d\n", m_pRobot->x, m_pRobot->z);
 	::glutPostRedisplay();
 	Reshape(m_nViewPortWidth, m_nViewPortHeight);
 	return GLvoid();
@@ -282,8 +302,6 @@ GLvoid CRuntimeFrameWork::OnProcessMouseMove(int x, int y)
 
 	//camera.rotateX += mouse.y / 2;
 	//camera.rotateX += mouse.y / 2;
-	cout << "µÈ´Ùµò´Ù" << endl;
-	cout << mouse.x << endl;
 	::glutPostRedisplay;
 	::glutPassiveMotionFunc;
 	Reshape(m_nViewPortWidth, m_nViewPortHeight);
