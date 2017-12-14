@@ -15,7 +15,7 @@ Map::Map() : mapSize(15)
 }
 void Map::MapRender()
 {
-
+	
 	for (int i = 0; i < mapSize; ++i)
 	{
 		for (int j = 0; j < mapSize; ++j)
@@ -25,7 +25,7 @@ void Map::MapRender()
 			{
 				glTranslatef(0, -60, 0);
 				Vector3D pos = arr[i][j].Map_pos;
-				(i + j) % 2 == 0 ? glColor3f(1.0f, 1.0f, 0.0f) : glColor3f(0.0f, 0.0f, 0.0f);
+				(i+j) % 2 == 0 ? glColor3f(1.0f, 1.0f, 0.0f) : glColor3f(0.0f, 0.0f, 0.0f);
 				glTranslatef(pos.x, pos.y, pos.z);
 				glutSolidCube(20);
 			}

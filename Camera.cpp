@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Scene.h"
 #include "Camera.h"
 //소현 TO DO : 11.24 카메라 설정 
 CCamera::CCamera()
@@ -23,13 +24,13 @@ GLvoid CCamera::CameraMove(int away)
 
 	switch (away) {
 	case 0:
-	case 1: 
+	case 1:
 		away == 0 ? sign = sign : sign = -sign;
 		m_mtxLocal.r1.x += (sign * MOVE_FACTOR);
 		m_mtxLocal.r2.x += (sign * MOVE_FACTOR);
 		break;
 	case 2:
-	case 3: 
+	case 3:
 		away == 2 ? sign = sign : sign = -sign;
 		m_mtxLocal.r1.y += (sign * MOVE_FACTOR);
 		m_mtxLocal.r2.y += (sign * MOVE_FACTOR);
@@ -57,20 +58,20 @@ GLvoid CCamera::CameraRotate(int away)
 	case 0:
 	case 1:
 		away == 0 ? sign = sign : sign = -sign;
-		m_vRotateAngle.y += (sign * ROTATE_FACTOR);
+		m_vRotateAngle.y += (sign * ROTATE_FACTOR)/3;
 		break;
 	case 2:
 	case 3:
 		//if (m_vRotateAngle.x > -55&& m_vRotateAngle.x<20)
-		{
+	{
 
 		away == 2 ? sign = sign : sign = -sign;
-		
-		m_vRotateAngle.x += (sign * ROTATE_FACTOR);
-		}
-		break;
+
+		m_vRotateAngle.x += (sign * ROTATE_FACTOR)/3;
 	}
-	cout <<"angle: "<< m_vRotateAngle.x << endl;
+	break;
+	}
+	cout << "angle: " << m_vRotateAngle.x << endl;
 	//GLfloat normalize = sqrt(pow(m_mtxLocal.r1.x, 2) + pow(m_mtxLocal.r1.y, 2) + pow(m_mtxLocal.r1.z, 2));
 	//
 	//m_mtxLocal.r2.x = -m_mtxLocal.r1.x / normalize;
@@ -82,6 +83,7 @@ GLvoid CCamera::CameraRotate(int away)
 
 GLvoid CCamera::CameraReset()
 {
+
 	m_vRotateAngle = Vector3D{ 0.0f, 0.0f, 0.0f };
 	m_mtxLocal.r1 = Vector3D{ 0.0f, 0.0f, -280.0f };
 	m_mtxLocal.r2 = Vector3D{ 0.0f, 0.0f, -1.0f };

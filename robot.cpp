@@ -7,6 +7,7 @@ GLvoid Robot::draw()
 	
 	glPushMatrix();
 	{
+		glScalef(0.5, 0.5, 0.5);
 		//Áü¹ú¶ô
 		glMultMatrixf(m_mtxLocal_trans);
 		glMultMatrixf(m_mtxLocal);
@@ -36,6 +37,7 @@ GLvoid Robot::draw()
 		glMateriali(GL_FRONT, GL_SHININESS, 16);
 		glPushMatrix();
 		{
+			glTranslatef(0, a, 0);
 			glTranslatef(0, 23, 0);
 			glColor4f(1.0, 1.0, 1.0, 0);
 			glutSolidCube(15);
@@ -50,6 +52,7 @@ GLvoid Robot::draw()
 		glMateriali(GL_FRONT, GL_SHININESS, 16);
 		glPushMatrix();
 		{
+			glTranslatef(0, a, 0);
 			glTranslatef(7.5, 23, 0);
 			glColor4f(0.4, 0.4, 0.2, 0);
 			glScalef(2, 1, 1);
@@ -65,6 +68,7 @@ GLvoid Robot::draw()
 		glMateriali(GL_FRONT, GL_SHININESS, 16);
 		glPushMatrix();
 		{
+			glTranslatef(0, a, -a);
 			glTranslatef(0, 0, 15);
 			glTranslatef(0, 15, 0);
 			glRotatef(Robot::angle, 0, 0, 1);
@@ -83,6 +87,7 @@ GLvoid Robot::draw()
 		glMateriali(GL_FRONT, GL_SHININESS, 16);
 		glPushMatrix();
 		{
+			glTranslatef(0, a, a);
 			glTranslatef(0, 0, -15);
 			glTranslatef(0, 15, 0);
 			glRotatef(-Robot::angle, 0, 0, 1);
@@ -101,6 +106,7 @@ GLvoid Robot::draw()
 		glMateriali(GL_FRONT, GL_SHININESS, 16);
 		glPushMatrix();
 		{
+			glTranslatef(0, a/2, -a);
 			glTranslatef(0, -30, 6);
 			glTranslatef(0, 15, 0);
 			glRotatef(-Robot::angle, 0, 0, 1);
@@ -119,6 +125,7 @@ GLvoid Robot::draw()
 		glMateriali(GL_FRONT, GL_SHININESS, 16);
 		glPushMatrix();
 		{
+			glTranslatef(0, a/2, a);
 			glTranslatef(0, -30, -6);
 			glTranslatef(0, 15, 0);
 			glRotatef(Robot::angle, 0, 0, 1);
@@ -136,55 +143,59 @@ GLvoid Robot::draw()
 
 GLvoid Robot::move(unsigned char key)
 {
-	//if (key == 8)
-	//{
-	//	direction = 90;
-	//	if (angle == 60)
-	//		angle_add = false;
-	//	if (angle == -60)
-	//		angle_add = true;
-	//	if (angle_add)
-	//		angle += 10;
-	//	else if (!angle_add)
-	//		angle -= 10;
+	if (key == '2')
+	{
+		z -= 5;
+		direction = 90;
+		if (angle == 60)
+			angle_add = false;
+		if (angle == -60)
+			angle_add = true;
+		if (angle_add)
+			angle += 10;
+		else if (!angle_add)
+			angle -= 10;
 
-	//}
-	//if (key == 2)
-	//{
-	//	direction = -90;
-	//	if (angle == 60)
-	//		angle_add = false;
-	//	if (angle == -60)
-	//		angle_add = true;
-	//	if (angle_add)
-	//		angle += 10;
-	//	else if (!angle_add)
-	//		angle -= 10;
-	//}
-	//if (key == 'a' || key == 'A')
-	//{
-	//	direction = 180;
-	//	if (angle == 60)
-	//		angle_add = false;
-	//	if (angle == -60)
-	//		angle_add = true;
-	//	if (angle_add)
-	//		angle += 10;
-	//	else if (!angle_add)
-	//		angle -= 10;
-	//}
-	//if (key == 'd' || key == 'D')
-	//{
-	//	direction = 0;
-	//	if (angle == 60)
-	//		angle_add = false;
-	//	if (angle == -60)
-	//		angle_add = true;
-	//	if (angle_add)
-	//		angle += 10;
-	//	else if (!angle_add)
-	//		angle -= 10;
-	//}
+	}
+	if (key == '8')
+	{
+		z += 5;
+		direction = -90;
+		if (angle == 60)
+			angle_add = false;
+		if (angle == -60)
+			angle_add = true;
+		if (angle_add)
+			angle += 10;
+		else if (!angle_add)
+			angle -= 10;
+	}
+	if (key == '6')
+	{
+		x -= 5;
+		direction = 180;
+		if (angle == 60)
+			angle_add = false;
+		if (angle == -60)
+			angle_add = true;
+		if (angle_add)
+			angle += 10;
+		else if (!angle_add)
+			angle -= 10;
+	}
+	if (key == '4')
+	{
+		x += 5;
+		direction = 0;
+		if (angle == 60)
+			angle_add = false;
+		if (angle == -60)
+			angle_add = true;
+		if (angle_add)
+			angle += 10;
+		else if (!angle_add)
+			angle -= 10;
+	}
 
 	switch (key)
 	{

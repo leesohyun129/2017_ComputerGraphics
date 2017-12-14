@@ -5,7 +5,7 @@
 #define FPS_PERSECOND 60
 #define GL_PI 3.1415f
 #define MOVE_FACTOR 0.5f
-#define ROTATE_FACTOR 5.0f
+#define ROTATE_FACTOR 2.0f
 
 struct Vector2D
 {

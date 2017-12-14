@@ -2,7 +2,7 @@
 class Robot {
 public:
 	int x = 0;
-	int y = 10;//-50;
+	int y = -20;//-50;
 	int z = 0;
 	bool isjump = false;
 	bool isfalling = false;
@@ -12,6 +12,9 @@ public:
 	int direction;
 	int angle;
 	bool angle_add = true;
+
+	int a = 0;
+	bool isDead = false;
 
 	GLvoid draw();
 	GLvoid move(unsigned char key);

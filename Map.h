@@ -9,10 +9,12 @@ class Map
 {
 private:
 	int mapSize;
-	MapInfo **arr;
 public:
+	MapInfo **arr;
 	Map();
 	~Map() = default;
+	bool isBomb[15][15];
+	bool Explode[15][15];
 
 	void MapRender();
 };

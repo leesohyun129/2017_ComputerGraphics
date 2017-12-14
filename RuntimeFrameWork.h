@@ -4,6 +4,9 @@ class Map;
 class Player;
 class Robot;
 class Airplane;
+class Bomb;
+class Explosion_effect;
+class Scene;
 class CRuntimeFrameWork
 {
 private:
@@ -15,6 +18,7 @@ private:
 	GLboolean m_bGimbalLock{ true };
 
 private:
+	int scene_Num = 1;
 	GLint m_fCurrentTime;
 	GLfloat m_fPrevTime;
 	GLint m_nCurrentFrame;
@@ -29,12 +33,16 @@ private:
 	Vector3D vLook;
 	Vector3D vUp;
 
+
 	CCamera*			m_pCamera{ nullptr };
 	
 	Map* m_pMap{nullptr};
 	Player* m_pPlayer{ nullptr };
 	Robot* m_pRobot{ nullptr };
 	Airplane* m_pAirplane{ nullptr };
+	Bomb* m_pBomb[15][15]{ nullptr };
+	Explosion_effect* m_pExplosion[15][15]{ nullptr };
+	Scene* m_pScene{ nullptr };
 // using ¼±¾ð
 public:
 	//typedef GLvoid(*Idle)();
