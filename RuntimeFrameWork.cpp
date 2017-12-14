@@ -71,7 +71,10 @@ GLvoid CRuntimeFrameWork::Init()
 			m_pExplosion[i][j]->init();
 		}
 	}
-	
+	m_pScene->scene_Num = 0;
+
+	m_pScene->read();
+	m_pScene->setTexture();
 	glEnable(GL_DEPTH_TEST);
 	return GLvoid();
 }
@@ -102,10 +105,13 @@ GLvoid CRuntimeFrameWork::Render()
 		switch (m_pScene->scene_Num)
 		{
 		case 0:
-			m_pScene->read();
 			m_pScene->drawlogo();
+			m_pScene->Button();
 			break;
 		case 1:
+			m_pScene->control();
+			break;
+		case 2:
 			m_pMap->MapRender();
 			m_pRobot->draw();
 			for (int i = 0; i < 15; i++)
@@ -149,7 +155,7 @@ GLvoid CRuntimeFrameWork::TimerFunc(int value)
 		//m_pScene->logoTrans.y = 100 ? m_pScene->logoTrans.y += 1:
 
 		break;
-	case 1:
+	case 2:
 		for (int i = 0; i < 15; i++)
 		{
 			for (int j = 0; j < 15; j++)
@@ -254,6 +260,14 @@ GLvoid CRuntimeFrameWork::OnProcessKeyBoard(unsigned char key, int x, int y)
 
 		break;
 	case 1:
+		switch (m_pScene->scene_Num)
+		{
+		case 27://esc로 종료
+			m_pScene->scene_Num = 0;
+			break;
+		}
+
+	case 2:
 		switch (key)
 		{
 		case 'w': case 'W':
@@ -287,6 +301,9 @@ GLvoid CRuntimeFrameWork::OnProcessKeyBoard(unsigned char key, int x, int y)
 			break;
 		case 'y':
 			break;
+		case 27://esc로 종료
+			m_pScene->scene_Num = 0;
+			break;
 		}
 
 		if (!m_pRobot->isDead)
@@ -309,13 +326,18 @@ GLvoid CRuntimeFrameWork::OnProcessSpecialKeyBoard(int key, int x, int y)
 		{
 		
 		case GLUT_KEY_PAGE_UP:
+			m_pScene->scene_Num = 2;
+			m_pCamera->CameraReset();
+			break;
+		case GLUT_KEY_INSERT:
 			m_pScene->scene_Num = 1;
 			m_pCamera->CameraReset();
+
 			break;
 		}
 		
 		
-	case 1:
+	case 2:
 		switch (key)
 		{
 		case GLUT_KEY_LEFT:
@@ -354,9 +376,8 @@ GLvoid CRuntimeFrameWork::OnProcessMouseMove(int x, int y)
 	switch (m_pScene->scene_Num)
 	{
 	case 0:
-
 		break;
-	case 1:
+	case 2:
 		mouse.x = x - preMouse.x;
 		preMouse.x = x;
 		mouse.y = y - preMouse.y;
@@ -408,7 +429,7 @@ GLvoid CRuntimeFrameWork::Reshape(int width, int height)
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		gluPerspective(60.0f, m_nViewPortWidth/ m_nViewPortHeight, 1.0f, 10000.0f);
+		gluPerspective(60.0f, 1, 1.0f, 10000.0f);
 
 		vRotate = m_pCamera->GetCameraRotate();
 		vEye = m_pCamera->GetCameraPos();
@@ -429,7 +450,7 @@ GLvoid CRuntimeFrameWork::Reshape(int width, int height)
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		break;
-	case 1:
+	case 2:
 		glViewport(0, 0, m_nViewPortWidth, m_nViewPortHeight);
 
 		glMatrixMode(GL_PROJECTION);

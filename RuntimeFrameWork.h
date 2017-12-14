@@ -13,8 +13,7 @@ private:
 //	static CRuntimeFrameWork* mySelf;
 
 private:
-	GLint m_nViewPortWidth;
-	GLint m_nViewPortHeight;
+
 	GLboolean m_bGimbalLock{ true };
 
 private:
@@ -45,6 +44,8 @@ private:
 	Scene* m_pScene{ nullptr };
 // using ¼±¾ð
 public:
+	GLint m_nViewPortWidth;
+	GLint m_nViewPortHeight;
 	//typedef GLvoid(*Idle)();
 	using Idle = GLvoid(*)();
 	using Display = GLvoid(*)();
